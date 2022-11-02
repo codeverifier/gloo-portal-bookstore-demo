@@ -1,0 +1,9 @@
+apiVersion: devportal.solo.io/v1alpha1
+kind: APIDoc
+metadata:
+  name: bookstore-schema
+  namespace: apps-configuration
+spec:
+  openApi:
+    content:
+      fetchUrl: https://raw.githubusercontent.com/pseudonator/gloo-portal-bookstore-demo/master/oas/oas-v3.yaml

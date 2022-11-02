@@ -1,0 +1,24 @@
+apiVersion: devportal.solo.io/v1alpha1
+kind: APIProduct
+metadata:
+  name: bookstore-product
+  namespace: apps-configuration
+spec:
+  displayInfo: 
+    description: Book Store
+    title: Book Store
+  versions:
+  - name: v1
+    apis: 
+    - apiDoc:
+        name: bookstore-schema
+        namespace: apps-configuration
+    defaultRoute:
+      inlineRoute:
+        backends:
+        - kube:
+            name: bookstore-svc
+            namespace: apps
+            port: 8080
+    tags:
+      stable: {}

@@ -1,0 +1,208 @@
+openapi: 3.0.1
+info:
+  title: Book Store Demo
+  description: 'This is a simple API service with a mongo banckend. You can find the source code [here](https://github.com/pseudonator/gloo-portal-bookstore-demo). This application helps to demo the Gloo Portal from [Solo.io](https://solo.io).'
+  contact:
+    email: kasun.talwatta@solo.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Visit solo.io if you need to find more information Solo.io
+  url: https://solo.io
+
+tags:
+  - name: books
+    description: CRUD operations on books for book store
+    externalDocs:
+      description: To understand how the API is authored look at the project source code
+      url: https://github.com/pseudonator/gloo-portal-bookstore-demo
+paths:
+  /api/books:
+    get:
+      tags:
+        - books
+      summary: Get all books
+      description: Returns all books
+      operationId: getBooks
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllBooks'
+    post:
+      tags:
+        - books
+      summary: Add a new book to the database
+      operationId: addBook
+      requestBody:
+        description: Book object that needs to be added to the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookNoID'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsertedID'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+        - books
+      summary: Delete all books from the database
+      operationId: removeAllBooks
+      responses:
+        202:
+          description: Remove all books
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deleted'
+  /api/books/{id}:
+    get:
+      tags:
+        - books
+      summary: Find book by ID
+      description: Returns a single book
+      operationId: getBook
+      parameters:
+        - name: id
+          in: path
+          description: ID of book to return
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Book not found
+          content: {}
+    put:
+      tags:
+        - books
+      summary: Update an existing book
+      operationId: updateBook
+      parameters:
+        - name: id
+          in: path
+          description: ID of book to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Book object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookNoID'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+        - books
+      summary: Deletes a book by id
+      operationId: removeBook
+      parameters:
+      - name: id
+        in: path
+        description: Book id to remove
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteOne'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Book not found
+          content: {}
+components:
+  schemas:
+    InsertedID:
+      type: object
+      properties:
+        InsertedID:
+          type: string
+          example: "c3ac7dbe-05e3-45c8-be1a-bdf0e917f9e6"
+    Deleted:
+      type: object
+      properties:
+        DeletedCount:
+          type: integer
+          example: 3
+    DeleteOne:
+      type: object
+      properties:
+        DeletedCount:
+          type: integer
+          example: 1
+    AllBooks:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: "c3ac7dbe-05e3-45c8-be1a-bdf0e917f9e6"
+          name:
+            type: string
+            example: "To Kill a Mockingbird"
+          author:
+            type: string
+            example: "Harper Lee"
+    BookNoID:
+      required:
+      - Name
+      - Author
+      type: object
+      properties:
+        name:
+          type: string
+          example: "To Kill a Mockingbird"
+        author:
+          type: string
+          example: "Harper Lee"
+    Book:
+      required:
+      - Name
+      - Author
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "c3ac7dbe-05e3-45c8-be1a-bdf0e917f9e6"
+        name:
+          type: string
+          example: "To Kill a Mockingbird"
+        author:
+          type: string
+          example: "Harper Lee"
+
