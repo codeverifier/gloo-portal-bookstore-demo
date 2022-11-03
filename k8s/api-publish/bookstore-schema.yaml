@@ -1,4 +1,4 @@
-apiVersion: devportal.solo.io/v1alpha1
+apiVersion: portal.gloo.solo.io/v1beta1
 kind: APIDoc
 metadata:
   name: bookstore-schema

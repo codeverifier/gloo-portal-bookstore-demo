@@ -1,0 +1,10 @@
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: bookstore-upstream
+  namespace: apps-configuration
+spec:
+  kube:
+    serviceName: bookstore-svc
+    serviceNamespace: apps
+    servicePort: 8080

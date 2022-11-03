@@ -1,0 +1,48 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Environment
+metadata:
+  name: bookstore-dev
+  namespace: apps-configuration
+spec:
+  domains:
+    - "api.$DOMAIN_NAME"
+
+  displayInfo:
+    description: This environment is meant for developers to deploy and test Book Store APIs.
+    displayName: Development
+
+  # Define products, versions and associated usage plans
+  apiProducts:
+    - namespaces: 
+        - '*'
+      labels:
+        - key: app
+          operator: Equals
+          values:
+            - bookstore
+      versions:
+        tags:
+          - stable
+      usagePlans:
+        - basic
+
+  # Define all the usage plans
+  parameters:
+    usagePlans:
+      basic:
+        displayName: Basic plan with API key auth
+        authPolicy:
+          apiKey: { }
+
+  # Override CORS due to content type
+  gatewayConfig:
+    options:
+      cors:
+        allowCredentials: true
+        allowHeaders:
+          - api-key
+          - Authorization
+          - content-type
+        allowOrigin:
+          - http://portal.$DOMAIN_NAME
+          - https://portal.$DOMAIN_NAME

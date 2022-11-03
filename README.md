@@ -11,7 +11,7 @@ This portal demo is based on Book Store sample application.
     export CLUSTER_REGION=australia-southeast1
     export PROJECT="gloo-portal-demo"
 
-    export DOMAIN_NAME=gpd.development.internal
+    export DOMAIN_NAME=bookstore.development.internal
 
     export GLOO_EDGE_HELM_VERSION=1.12.33
     export GLOO_EDGE_VERSION=v${GLOO_EDGE_HELM_VERSION}
@@ -61,5 +61,5 @@ helm install gloo-portal gloo-portal/gloo-portal -n gloo-portal \
 kubectl create ns apps
 kubectl create ns apps-configuration
 
-kubectl apply -f k8s/deployment -n apps
+./k8s/bookstrap-demo-portal-environment.sh prov
 ```
