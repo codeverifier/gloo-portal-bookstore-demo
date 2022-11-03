@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Book Store Demo
-  description: 'This is a simple API service with a mongo banckend. You can find the source code [here](https://github.com/pseudonator/gloo-portal-bookstore-demo). This application helps to demo the Gloo Portal from [Solo.io](https://solo.io).'
+  description: 'This is a simple API service with a mongo banckend. You can find the source code in https://github.com/pseudonator/gloo-portal-bookstore-demo. This application helps to demo the Gloo Portal from Solo.io.'
   contact:
     email: kasun.talwatta@solo.io
   license:

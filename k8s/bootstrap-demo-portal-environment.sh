@@ -16,6 +16,7 @@ Provision() {
   echo "Injecting assets for publishing APIs and portal"
   echo "------------------------------------------------------------"
   echo ""
+  kubectl apply -f $DIR/api-publish/bookstore-route.yaml
   kubectl apply -f $DIR/api-publish/bookstore-schema.yaml
   kubectl apply -f $DIR/api-publish/bookstore-product.yaml
   envsubst < <(cat $DIR/api-publish/bookstore-env.yaml) | kubectl apply -f -
@@ -35,6 +36,7 @@ Provision() {
 Delete() {
   echo "Cleaning up ..."
 
+  kubectl delete -f $DIR/api-publish/bookstore-route.yaml
   kubectl delete -f $DIR/api-publish/bookstore-schema.yaml
   kubectl delete -f $DIR/api-publish/bookstore-product.yaml
   envsubst < <(cat $DIR/api-publish/bookstore-env.yaml) | kubectl delete -f -

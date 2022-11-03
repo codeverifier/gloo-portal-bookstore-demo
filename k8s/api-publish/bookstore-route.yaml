@@ -1,0 +1,26 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Route
+metadata:
+  name: bookstore-route
+  namespace: apps-configuration
+  labels:
+    app: bookstore
+spec:
+  backends:
+    ## Various ways of definding the backend
+    ## ------------------------------------------------
+    # - kube:
+    #     name: bookstore-svc
+    #     namespace: apps
+    #     port: 8080
+    ## ------------------------------------------------
+    - upstream:
+        name: bookstore-upstream
+        namespace: apps-configuration
+    ## ------------------------------------------------
+  options:
+    headerManipulation:
+      responseHeadersToAdd:
+        - header:
+            key: TEST_HEADER
+            value: test

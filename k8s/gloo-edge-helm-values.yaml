@@ -215,11 +215,34 @@ gloo:
           accessLog:
             - fileSink:
                 path: /dev/stdout
-                stringFormat: >
-                  [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%"
-                  %RESPONSE_CODE% %RESPONSE_FLAGS% %BYTES_RECEIVED% %BYTES_SENT% %DURATION%
-                  %RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)% "%REQ(X-FORWARDED-FOR)%" "%REQ(USER-AGENT)%"
-                  "%REQ(X-REQUEST-ID)%" "%REQ(:AUTHORITY)%" "%UPSTREAM_HOST%"
+                ## ------------------------------------------------------------------------------------------------
+                jsonFormat:
+                  startTime: "%START_TIME%"
+                  requestId: "%REQ(X-REQUEST-ID)%"
+                  method: "%REQ(:METHOD)%"
+                  originalPath: "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%"
+                  path: "%REQ(:PATH)%"
+                  protocol: "%PROTOCOL%"
+                  responseCode: "%RESPONSE_CODE%"
+                  responseFlags: "%RESPONSE_FLAGS%"
+                  upstreamCluster: "%UPSTREAM_CLUSTER%"
+                  upstreamHost: "%UPSTREAM_HOST%"
+                  authority: "%REQ(:AUTHORITY)%"
+                  received: "%BYTES_RECEIVED%" 
+                  sent: "%BYTES_SENT%" 
+                  duration: "%DURATION%"
+                  upstreamProcDuration: "%RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)%"
+                  xff: "%REQ(X-FORWARDED-FOR)%"
+                  agent: "%REQ(USER-AGENT)%"
+                  upstream: "%UPSTREAM_HOST%"
+                ## ------------------------------------------------------------------------------------------------
+                # stringFormat: >
+                #   [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%"
+                #   %RESPONSE_CODE% %RESPONSE_FLAGS% %BYTES_RECEIVED% %BYTES_SENT% %DURATION%
+                #   %RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)% "%REQ(X-FORWARDED-FOR)%" "%REQ(USER-AGENT)%"
+                #   "%REQ(X-REQUEST-ID)%" "%REQ(:AUTHORITY)%" "%UPSTREAM_HOST%"
+                ## ------------------------------------------------------------------------------------------------
+            ## For monetization
             # - grpcService:
             #     logName: "monetization-log"
             #     staticClusterName: "extauth"

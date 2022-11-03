@@ -26,13 +26,19 @@ spec:
       usagePlans:
         - basic
 
-  # Define all the usage plans
   parameters:
+    # Define all the usage plans
     usagePlans:
       basic:
         displayName: Basic plan with API key auth
         authPolicy:
           apiKey: { }
+    # Define parameterized routes
+    routes:
+      envSpecifiedRoute:
+        routeRef:
+          name: bookstore-route
+          namespace: apps-configuration
 
   # Override CORS due to content type
   gatewayConfig:

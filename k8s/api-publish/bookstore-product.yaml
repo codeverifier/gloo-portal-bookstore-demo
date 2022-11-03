@@ -18,10 +18,19 @@ spec:
             namespace: apps-configuration
       gatewayConfig:
         route:
-          inlineRoute:
-            backends:
-              - upstream:
-                  name: bookstore-upstream
-                  namespace: apps-configuration
+          ## Demonstrating various ways of referencing the route
+          ## -------------------------------------------------
+          environmentRoute: envSpecifiedRoute
+          ## -------------------------------------------------
+          # routeRef:
+          #   name: bookstore-route
+          #   namespace: apps-configuration
+          ## -------------------------------------------------
+          # inlineRoute:
+          #   backends:
+          #     - upstream:
+          #         name: bookstore-upstream
+          #         namespace: apps-configuration
+          ## -------------------------------------------------
       tags:
         stable: {}
